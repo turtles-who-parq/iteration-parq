@@ -1,20 +1,15 @@
-import Map from '@mui/icons-material/Map';
 import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
-import Dashboard from './components/Dashboard.jsx';
-import LandingPage from './views/LandingPage.jsx';
+import { Routes, Route } from 'react-router-dom';
+import Dashboard from './views/Dashboard';
+import LandingPage from './views/LandingPage';
 import '../public/stylesheets/styles.scss';
 
-const App = (props) => {
+const App = () => {
   return (
-    <div className='router'>
-      <main>
-        <Routes>
-          <Route exact path='/' component={LandingPage} />
-          <Route exact path='/dashboard' component={Dashboard} />
-        </Routes>
-      </main>
-    </div>
+    <Routes>
+      <Route exact path='/' element={LandingPage} />
+      <Route exact path='dashboard' element={Dashboard} />
+    </Routes>
   );
 };
 

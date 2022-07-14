@@ -1,6 +1,5 @@
 ﻿'use strict';
 require('dotenv').config();
-const debug = require('debug');
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -8,13 +7,14 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const users = require('./routes/users');
 const PORT = process.env.PORT;
 const app = express();
+const apiRouter = require('./routes/api');
+const userRouter = require('./routes/user');
 
 
 // uncomment after placing your favicon in /public
-app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(path.resolve(__dirname,'../public/favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -41,7 +41,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // routers
-app.use('/users', users);
+app.use('/api/users', userRouter);
+app.use('/api', apiRouter);
 
 // 404 Catch-All
 app.use('*', (req, res) => res.status(404).send('Not Found'));

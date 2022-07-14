@@ -1,20 +1,19 @@
 import React from 'react';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
-import '../styles.scss';
 import axios from 'axios';
-import logo from '../assets/blueParq.png';
-import topoBackground from '../assets/topoBackground.png';
-import bookArchway from '../assets/book archway.png';
-import hostArchway from '../assets/host archway.png';
+import logo from '../../public/images/blueParq.png';
+import topoBackground from '../../public/images/topoBackground.png';
+import bookArchway from '../../public/images/book-archway.png';
+import hostArchway from '../../public/images/host-archway.png';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { useState } from 'react';
+import { makeStyles } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import LoginPopup from '../components/LoginPopup.jsx';
 import AboutPage from '../components/About.jsx';
@@ -30,11 +29,11 @@ export default function LandingPage() {
       paddingBottom: 0,
       marginTop: 0,
       fontWeight: 500,
-      borderRadius: 0,
+      borderRadius: 0
     },
     input: {
-      color: 'white',
-    },
+      color: 'white'
+    }
   }));
 
   const classes = useStyles();
@@ -46,22 +45,22 @@ export default function LandingPage() {
   //   listings: [],
   // });
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
 
     axios
       .post('http://localhost:3000/api/all', {
-        address: address,
+        address: address
       })
-      .then((res) => {
-        history.push({
+      .then(res => {
+        navigate({
           pathname: '/dashboard',
-          data: res.data,
+          data: res.data
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(`Error occured in useEffect: ${err}`);
       });
   };
@@ -72,16 +71,18 @@ export default function LandingPage() {
         <Box sx={{ flexGrow: 1 }}>
           <Toolbar>
             <Button color='inherit' sx={{ flexGrow: 1 }}>
-              <Link  component={ RouterLink } to='/dashboard' style={{ textDecoration: 'none' }}>
+              <Link
+                component={RouterLink}
+                to='/dashboard'
+                style={{ textDecoration: 'none' }}>
                 <Typography
                   variant='h6'
                   component='div'
                   sx={{
                     textTransform: 'none',
                     fontWeight: 'light',
-                    color: '#36454F',
-                  }}
-                >
+                    color: '#36454F'
+                  }}>
                   book
                 </Typography>
               </Link>
@@ -93,9 +94,8 @@ export default function LandingPage() {
                 sx={{
                   textTransform: 'none',
                   fontWeight: 'light',
-                  color: '#36454F',
-                }}
-              >
+                  color: '#36454F'
+                }}>
                 <Host />
               </Typography>
             </Button>
@@ -109,9 +109,8 @@ export default function LandingPage() {
                 sx={{
                   textTransform: 'none',
                   fontWeight: 'light',
-                  color: '#36454F',
-                }}
-              >
+                  color: '#36454F'
+                }}>
                 <AboutPage />
               </Typography>
             </Button>
@@ -122,9 +121,8 @@ export default function LandingPage() {
                 sx={{
                   textTransform: 'none',
                   fontWeight: 'light',
-                  color: '#36454F',
-                }}
-              >
+                  color: '#36454F'
+                }}>
                 <LoginPopup />
               </Typography>
             </Button>
@@ -143,15 +141,14 @@ export default function LandingPage() {
               className={classes.textField}
               value={address}
               size='small'
-              onChange={(e) => setAddress(e.target.value)}
+              onChange={e => setAddress(e.target.value)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position='start'>
                     <SearchIcon sx={{ color: '#B9D8D8' }} />
                   </InputAdornment>
-                ),
-              }}
-            ></TextField>
+                )
+              }}></TextField>
           </form>
         </div>
       </div>
@@ -159,18 +156,16 @@ export default function LandingPage() {
       <div className='archways' style={{ height: 'calc( 100vh - 440px)' }}>
         <div
           className='leftArch'
-          style={{ width: '49%', height: '100%', float: 'left' }}
-        >
-          <Link component={ RouterLink } to='/dashboard'>
+          style={{ width: '49%', height: '100%', float: 'left' }}>
+          <Link component={RouterLink} to='/dashboard'>
             <button className='leftArchText'>book</button>
           </Link>
           <img className='archway' src={bookArchway} width='100%'></img>
         </div>
         <div
           className='rightArch'
-          style={{ width: '50%', height: '100%', float: 'right' }}
-        >
-          <Link component={ RouterLink } to='/dashboard'>
+          style={{ width: '50%', height: '100%', float: 'right' }}>
+          <Link component={RouterLink} to='/dashboard'>
             <button className='rightArchText'>host</button>
           </Link>
           <img className='archway' src={hostArchway} width='100%'></img>

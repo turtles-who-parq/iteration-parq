@@ -1,4 +1,4 @@
-const { Location, Booking } = require("../models/userModel");
+const { Location, Booking } = require('../models/userModel');
 
 const apiController = {};
 
@@ -6,7 +6,7 @@ const apiController = {};
 apiController.createLocation = async (req, res, next) => {
   // When host adds listing, create new location in the db
   try {
-    const hostName = res.locals.username
+    const hostName = res.locals.username;
     const { address, price, options, size } = req.body;
     const coordinates = res.locals.data;
     console.log(coordinates);
@@ -18,14 +18,14 @@ apiController.createLocation = async (req, res, next) => {
       options,
       size,
       coordinates,
-    }).then((locationSaved) => {
+    }).then(() => {
       return next();
     });
   } catch (err) {
     return next({
       log: `apiController.createLocation: Error: ${err}`,
       message: {
-        err: "Error occured in apiController.createLocation",
+        err: 'Error occured in apiController.createLocation',
       },
     });
   }
@@ -41,7 +41,7 @@ apiController.getLocation = (req, res, next) => {
       return next({
         log: `apiController.getLocation error :${err}`,
         message: {
-          err: "Error occured in getLocation",
+          err: 'Error occured in getLocation',
         },
       });
     }
@@ -59,7 +59,7 @@ apiController.getAllLocation = (req, res, next) => {
       return next({
         log: `apiController.getAllLocation error :${err}`,
         message: {
-          err: "Error occured in getAllLocation",
+          err: 'Error occured in getAllLocation',
         },
       });
     }
@@ -81,10 +81,10 @@ apiController.getAllLocation = (req, res, next) => {
 // "Create booking" controller
 apiController.createBooking = (req, res, next) => {
   //get input from user request (TBD)
-  const username = res.locals.username
+  const username = res.locals.username;
   const { hostUsername, bookingDate, length, location } = req.body;
-  console.log("username:", username)
-  console.log("req", req.body)
+  console.log('username:', username);
+  console.log('req', req.body);
   Booking.create(
     {
       clientUsername: username,
@@ -98,7 +98,7 @@ apiController.createBooking = (req, res, next) => {
         return next({
           log: `apiController.getLocation error :${err}`,
           message: {
-            err: "Error occured in getLocation",
+            err: 'Error occured in getLocation',
           },
         });
       }
@@ -114,15 +114,15 @@ apiController.getBooking = async (req, res, next) => {
   const { username } = req.body;
   await Booking.findOne({ clientUsername: username }).then((result) => {
     if (result) {
-      console.log("Booking found in database!");
+      console.log('Booking found in database!');
       res.locals.booking = result;
       return next();
     } else {
-      console.log("Booking not found in database");
+      console.log('Booking not found in database');
       return next({
-        log: `apiController.getBooking error`,
+        log: 'apiController.getBooking error',
         message: {
-          err: "Error occured finding booking location",
+          err: 'Error occured finding booking location',
         },
       });
     }

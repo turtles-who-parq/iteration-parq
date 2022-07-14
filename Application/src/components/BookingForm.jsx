@@ -1,33 +1,27 @@
-import React, { useState } from "react";
-import { Redirect, useHistory } from "react-router-dom";
-import "../styles.scss";
-import { styled } from "@mui/material/styles";
-import axios from "axios";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import topoBackground from "../assets/topoBackground.png";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
-import { Login } from "./Login.jsx";
+import React, { useState } from 'react';
+import { styled } from '@mui/material/styles';
+import axios from 'axios';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import PropTypes from 'prop-types';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import { Login } from './Login.jsx';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  "& .MuiDialogContent-root": {
-    padding: theme.spacing(2),
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2)
   },
-  "& .MuiDialogActions-root": {
-    padding: theme.spacing(1),
-  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1)
+  }
 }));
 
-const BootstrapDialogTitle = (props) => {
+const BootstrapDialogTitle = props => {
   const { children, onClose, ...other } = props;
 
   return (
@@ -35,15 +29,14 @@ const BootstrapDialogTitle = (props) => {
       {children}
       {onClose ? (
         <IconButton
-          aria-label="close"
+          aria-label='close'
           onClick={onClose}
           sx={{
-            position: "absolute",
+            position: 'absolute',
             right: 8,
             top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
+            color: theme => theme.palette.grey[500]
+          }}>
           <CloseIcon />
         </IconButton>
       ) : null}
@@ -53,48 +46,46 @@ const BootstrapDialogTitle = (props) => {
 
 BootstrapDialogTitle.propTypes = {
   children: PropTypes.node,
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired
 };
 
 export const BookingForm = ({ hostName, address }) => {
-  const [createDate, setCreateDate] = useState("");
+  const [createDate, setCreateDate] = useState('');
   const [createLength, setCreateLength] = useState(0);
   const [open, setOpen] = useState(false);
-
-  const history = useHistory();
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const handleBooking = (e) => {
+  const handleBooking = e => {
     const date = createDate;
     const length = createLength;
 
     e.preventDefault();
-    console.log("handleBooking post called");
+    console.log('handleBooking post called');
 
     axios
       .post(
-        "/api/booking",
+        '/api/booking',
         {
           hostUsername: hostName,
           bookingDate: date,
           length: length,
-          location: address,
+          location: address
         },
         {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
-          },
+            Authorization: `Bearer ${sessionStorage.getItem('access_token')}`
+          }
         }
       )
-      .then((res) => {
+      .then(res => {
         if (res.status === 200) {
-          alert("Booking has been created");
+          alert('Booking has been created');
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err.response.status);
         if (err.response.status === 403) {
           setOpen(true);
@@ -105,55 +96,53 @@ export const BookingForm = ({ hostName, address }) => {
   if (!open) {
     return (
       <Box
-        component="form"
+        component='form'
         sx={{
-          "& .MuiTextField-root": { m: 1, width: "20ch" },
+          '& .MuiTextField-root': { m: 1, width: '20ch' }
         }}
         noValidate
-        autoComplete="off"
-      >
+        autoComplete='off'>
         <div>
-          {" "}
+          {' '}
           <TextField
-            onChange={(e) => setCreateLength(e.target.value)}
+            onChange={e => setCreateLength(e.target.value)}
             required
-            id="outlined-required"
-            label="Length"
-            defaultValue=""
+            id='outlined-required'
+            label='Length'
+            defaultValue=''
           />
           <TextField
-            onChange={(e) => setCreateDate(e.target.value)}
+            onChange={e => setCreateDate(e.target.value)}
             required
-            id="outlined-required"
-            label="Date"
-            defaultValue=""
+            id='outlined-required'
+            label='Date'
+            defaultValue=''
           />
           <Button
             onClick={handleBooking}
-            type="submit"
-            color="primary"
-            variant="contained"
+            type='submit'
+            color='primary'
+            variant='contained'
             // style={btnstyle}
-            sx={{ 
-              border: ".75px solid #36454F",
+            sx={{
+              border: '.75px solid #36454F',
               color: '#BBD1D1',
               '&:hover': {
                 backgroundColor: '#BBD1D1',
                 color: '#F8F6F2',
-                boxShadow: "none",
-            },
+                boxShadow: 'none'
+              },
               background: '#F8F6F2',
-              textTransform: "none",
-              boxShadow: "none",
-              width: "84%",
-              marginBottom: ".5rem",
-              marginLeft: ".2rem",
-              paddingTop: ".75rem",
-              paddingBottom: ".75rem",
-              fontWeight: "bold"
-              }}
-          >
-            {" "}
+              textTransform: 'none',
+              boxShadow: 'none',
+              width: '84%',
+              marginBottom: '.5rem',
+              marginLeft: '.2rem',
+              paddingTop: '.75rem',
+              paddingBottom: '.75rem',
+              fontWeight: 'bold'
+            }}>
+            {' '}
             Book
           </Button>
         </div>
@@ -163,15 +152,13 @@ export const BookingForm = ({ hostName, address }) => {
     return (
       <BootstrapDialog
         onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-      >
+        aria-labelledby='customized-dialog-title'
+        open={open}>
         <BootstrapDialogTitle
-          id="customized-dialog-title"
-          onClose={handleClose}
-        ></BootstrapDialogTitle>
+          id='customized-dialog-title'
+          onClose={handleClose}></BootstrapDialogTitle>
         <DialogContent dividers>
-          <Login  />
+          <Login />
         </DialogContent>
       </BootstrapDialog>
     );

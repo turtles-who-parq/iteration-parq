@@ -1,31 +1,31 @@
-import React, { Component, useContext } from 'react';
+import React from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import { mapStyles } from '../assets/styles/mapsStyles';
+import { mapStyles } from '../../public/stylesheets/mapsStyles';
 
 const containerStyle = {
   width: '100%',
   height: '100%',
-  float: 'left',
+  float: 'left'
 };
 
 const options = {
-  styles: mapStyles,
+  styles: mapStyles
 };
 
 export default function Map({ data, zoom }) {
   const center = {
     lat: data.lat,
-    lng: data.lng,
+    lng: data.lng
   };
   const listings = data.listings;
 
   const markerElems = listings.map((listings, i) => {
     const position = {
       lat: listings.coordinates.lat,
-      lng: listings.coordinates.lng,
+      lng: listings.coordinates.lng
     };
 
-    const onMarkerClick = (e) => {
+    const onMarkerClick = e => {
       console.log(listings.address);
     };
 
@@ -38,8 +38,7 @@ export default function Map({ data, zoom }) {
         mapContainerStyle={containerStyle}
         center={center}
         zoom={zoom}
-        options={options}
-      >
+        options={options}>
         {markerElems}
         <></>
       </GoogleMap>

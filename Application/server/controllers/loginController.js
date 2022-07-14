@@ -1,7 +1,5 @@
-const express = require("express");
-const { User } = require("../models/userModel");
-const Joi = require("joi");
-const bcrypt = require("bcrypt");
+const { User } = require('../models/userModel');
+const bcrypt = require('bcryptjs');
 
 const loginController = {};
 
@@ -11,18 +9,18 @@ loginController.loginUser = async (req, res, next) => {
     //verify username
     const user = await User.findOne({ username });
     if (!user)
-      return res.status(401).send({ message: "Invalid username or password" });
+      return res.status(401).send({ message: 'Invalid username or password' });
     //verify password
     const validPassword = await bcrypt.compare(
       req.body.password,
       user.password
     );
     if (!validPassword)
-      return res.status(401).send({ message: "Invalid username or password" });
+      return res.status(401).send({ message: 'Invalid username or password' });
 
     return next();
   } catch (error) {
-    res.status(500).send({ message: "Internal Server Error" });
+    res.status(500).send({ message: 'Internal Server Error' });
   }
 };
 

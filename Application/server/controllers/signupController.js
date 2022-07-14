@@ -1,6 +1,5 @@
-const express = require("express");
-const bcrypt = require("bcrypt");
-const { User } = require("../models/userModel");
+const bcrypt = require('bcryptjs');
+const { User } = require('../models/userModel');
 
 const signupController = {};
 
@@ -8,11 +7,11 @@ signupController.signUp = async (req, res, next) => {
   try {
     // check if username already exists
     const user = await User.findOne({ username: req.body.username });
-    console.log("user:", user);
+    console.log('user:', user);
     if (user)
       return res
         .status(409)
-        .send({ message: "User with given username already exists" });
+        .send({ message: 'User with given username already exists' });
 
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashPassword = await bcrypt.hash(req.body.password, salt);
@@ -25,7 +24,7 @@ signupController.signUp = async (req, res, next) => {
     console.log(newUser);
     return next();
   } catch (error) {
-    res.status(500).send({ messsage: "error on signupController" });
+    res.status(500).send({ messsage: 'error on signupController' });
   }
 };
 

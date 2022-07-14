@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Redirect, useNavigate } from 'react-router-dom';
-import '../../public/stylesheets/styles.scss';
 import axios from 'axios';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -12,11 +11,9 @@ export default function HostForm() {
   const [createSize, setCreateSize] = useState(0);
   const [createOptions, setCreateOptions] = useState('');
 
-  const [locationCreated, setLocation] = useState(false);
-
   const navigate = useNavigate();
 
-  const handleHost = (e) => {
+  const handleHost = e => {
     const address = createAddress;
     const price = createPrice;
     const options = createOptions;
@@ -32,25 +29,25 @@ export default function HostForm() {
           address: address,
           price: price,
           options: options,
-          size: size,
+          size: size
         },
         {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
-          },
+            Authorization: `Bearer ${sessionStorage.getItem('access_token')}`
+          }
         }
       )
-      .then((res) => {
+      .then(res => {
         console.log('response from axios:', res);
         if (res.status === 200) {
           alert('Location saved');
           navigate({
             pathname: '/dashboard',
-            data: res.data,
+            data: res.data
           });
         }
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
 
   // if (setLocation) {
@@ -63,54 +60,53 @@ export default function HostForm() {
 
   return (
     <Box
-      component="form"
+      component='form'
       sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
+        '& .MuiTextField-root': { m: 1, width: '25ch' }
       }}
       noValidate
-      autoComplete="off"
-    >
+      autoComplete='off'>
       <div>
         <TextField
-          onChange={(e) => setCreateAddress(e.target.value)}
+          onChange={e => setCreateAddress(e.target.value)}
           required
-          id="outlined-required"
-          label="Address"
-          defaultValue=""
+          id='outlined-required'
+          label='Address'
+          defaultValue=''
         />
         <TextField
-          onChange={(e) => setCreatePrice(e.target.value)}
+          onChange={e => setCreatePrice(e.target.value)}
           required
-          id="outlined-required"
-          label="Price"
-          defaultValue=""
+          id='outlined-required'
+          label='Price'
+          defaultValue=''
         />
         <TextField
-          onChange={(e) => setCreateOptions(e.target.value)}
+          onChange={e => setCreateOptions(e.target.value)}
           required
-          id="outlined-required"
-          label="Options"
-          defaultValue=""
+          id='outlined-required'
+          label='Options'
+          defaultValue=''
         />
         <TextField
-          onChange={(e) => setCreateSize(e.target.value)}
+          onChange={e => setCreateSize(e.target.value)}
           required
-          id="outlined-input"
-          label="Size"
+          id='outlined-input'
+          label='Size'
         />
         <Button
           onClick={handleHost}
-          type="submit"
-          color="primary"
-          variant="contained"
+          type='submit'
+          color='primary'
+          variant='contained'
           // style={btnstyle}
-          sx={{ 
+          sx={{
             border: '.75px solid #36454F',
             color: '#BBD1D1',
             '&:hover': {
               backgroundColor: '#BBD1D1',
               color: '#F8F6F2',
-              boxShadow: 'none',
+              boxShadow: 'none'
             },
             background: '#F8F6F2',
             textTransform: 'none',
@@ -121,8 +117,7 @@ export default function HostForm() {
             paddingTop: '.75rem',
             paddingBottom: '.75rem',
             fontWeight: 'bold'
-          }}
-        >
+          }}>
           Submit Form
         </Button>
       </div>

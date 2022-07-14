@@ -1,19 +1,16 @@
-import React, { useState } from "react";
-import topoBackground from "../assets/topoBackground.png";
-import { Link } from "react-router-dom";
+import React from 'react';
+import topoBackground from '../../public/images/topoBackground.png';
 
-const ParkingSpot = ({ address, isVisible }) => {
-
-  const onSpotClick = (e) => {
+const ParkingSpot = ({ address }) => {
+  const onSpotClick = e => {
     console.log(address);
-    
   };
 
   return (
-    <div className="parkingSpotTile" onClick={onSpotClick}>
-      <img className="tileTopo" src={topoBackground} width="100%"></img>
+    <div className='parkingSpotTile' onClick={onSpotClick}>
+      <img className='tileTopo' src={topoBackground} width='100%'></img>
       <span>
-        <h1 className="spotAddress">{address}</h1>
+        <h1 className='spotAddress'>{address}</h1>
       </span>
     </div>
   );

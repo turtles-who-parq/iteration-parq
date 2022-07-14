@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
-import '../styles.scss';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import SignupPopup from './SignupPopup.jsx';
 import { Signup } from './Signup.jsx';
 
 export const Login = () => {
@@ -14,9 +12,9 @@ export const Login = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [signUp, setSignUp] = useState(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = e => {
     const username = createUsername;
     const password = createPassword;
     e.preventDefault();
@@ -25,25 +23,25 @@ export const Login = () => {
     axios
       .post('/api/users/login', {
         username: username,
-        password: password,
+        password: password
       })
-      .then((res) => {
+      .then(res => {
         console.log('response from axios:', res);
         sessionStorage.setItem('access_token', res.data);
         if (res.status === 201) {
           setLoggedIn(true);
         }
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
 
   if (loggedIn) {
     setTimeout(() => {
-      history.push('/dashboard');
+      navigate('/dashboard');
     }, 0);
   }
 
-  const signupPopup = (e) => {
+  const signupPopup = e => {
     e.preventDefault();
     setSignUp(true);
   };
@@ -51,47 +49,44 @@ export const Login = () => {
   if (!signUp) {
     return (
       <Box
-        component="form"
+        component='form'
         sx={{
-          '& .MuiTextField-root': { m: 1, width: '25ch' },
+          '& .MuiTextField-root': { m: 1, width: '25ch' }
         }}
         noValidate
-        autoComplete="off"
-      >
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr'}}>
+        autoComplete='off'>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr' }}>
           <TextField
-            onChange={(e) => setCreateUsername(e.target.value)}
+            onChange={e => setCreateUsername(e.target.value)}
             required
-            id="outlined-required"
-            label="username"
-            defaultValue=""
+            id='outlined-required'
+            label='username'
+            defaultValue=''
           />
           <TextField
-            onChange={(e) => setCreatePassword(e.target.value)}
+            onChange={e => setCreatePassword(e.target.value)}
             required
-            id="outlined-password-input"
-            label="password"
-            type="password"
-            autoComplete="current-password"
-            sx={{
-              
-            }}
+            id='outlined-password-input'
+            label='password'
+            type='password'
+            autoComplete='current-password'
+            sx={{}}
           />
           <Button
             onClick={handleLogin}
-            type="submit"
-            color="primary"
-            variant="contained"
+            type='submit'
+            color='primary'
+            variant='contained'
             // style={btnstyle}
             fullWidth
-            sx={{ 
+            sx={{
               border: '.75px solid #36454F',
               color: '#BBD1D1',
               '&:hover': {
                 backgroundColor: '#BBD1D1',
                 color: '#F8F6F2',
-                boxShadow: 'none',
-            },
+                boxShadow: 'none'
+              },
               background: '#F8F6F2',
               textTransform: 'none',
               boxShadow: 'none',
@@ -102,25 +97,24 @@ export const Login = () => {
               paddingTop: '.75rem',
               paddingBottom: '.75rem',
               fontWeight: 'bold'
-              }}
-          >
+            }}>
             {' '}
             log in
           </Button>
           <Button
             onClick={signupPopup}
-            type="submit"
-            color="primary"
-            variant="contained"
+            type='submit'
+            color='primary'
+            variant='contained'
             // style={btnstyle}
-            sx={{ 
+            sx={{
               border: '.75px solid #36454F',
               color: '#BBD1D1',
               '&:hover': {
                 backgroundColor: '#BBD1D1',
                 color: '#F8F6F2',
-                boxShadow: 'none',
-            },
+                boxShadow: 'none'
+              },
               background: '#F8F6F2',
               textTransform: 'none',
               boxShadow: 'none',
@@ -130,8 +124,7 @@ export const Login = () => {
               paddingTop: '.75rem',
               paddingBottom: '.75rem',
               fontWeight: 'bold'
-              }}
-          >
+            }}>
             {' '}
             no account? sign up
           </Button>
