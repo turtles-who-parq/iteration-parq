@@ -147,4 +147,4 @@ jobs:
         npm install
         cd ../Tests
         npm install
-        gulp functionaltest --webAppUrl https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net/
+        # gulp functionaltest --webAppUrl https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net/
