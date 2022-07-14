@@ -1,14 +1,10 @@
 {
-  "name": "nodejs-webapp-express",
+  "name": "parq",
   "version": "0.0.0",
-  "private": true,
   "scripts": {
     "start": "node app"
   },
-  "description": "nodejs-webapp-express",
-  "author": {
-    "name": "alagrawa"
-  },
+  "description": "Iteration on Parq",
   "dependencies": {
     "body-parser": "^1.15.0",
     "cookie-parser": "^1.4.0",
@@ -20,6 +16,6 @@
     "natives": "^1.1.6"
   },
   "engines": {
-    "node": "~6.10.x"
+    "node": "16.16.0"
   }
 }
