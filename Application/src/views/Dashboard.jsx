@@ -18,7 +18,7 @@ import AboutPage from '../components/About.jsx';
 import Host from '../components/Host.jsx';
 import ParkingSpotTest from '../components/ParkingSpotTest.jsx';
 
-export default function Dashboard(props) {
+export default function Dashboard(state) {
   const useStyles = makeStyles(() => ({
     textField: {
       width: '98%',
@@ -49,7 +49,7 @@ export default function Dashboard(props) {
     listings: []
   });
 
-  const state = {
+  const props = {
     data: data,
     isVisible: true,
     zoom: zoom
@@ -71,7 +71,7 @@ export default function Dashboard(props) {
   };
 
   useEffect(() => {
-    setData(props.location.data ? props.location.data : data);
+    setData(state.location.data ? state.location.data : data);
     setZoom(13);
   }, []);
   // { lat: 34.052235, lng: -118.243683, listings: [] }
