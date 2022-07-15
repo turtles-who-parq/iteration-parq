@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { makeStyles } from '@mui/material/styles';
+// import { makeStyles } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
@@ -19,27 +19,27 @@ import Host from '../components/Host.jsx';
 import ParkingSpotTest from '../components/ParkingSpotTest.jsx';
 
 export default function Dashboard(state) {
-  const useStyles = makeStyles(() => ({
-    textField: {
-      width: '98%',
-      height: '50%',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      paddingBottom: 0,
-      marginTop: 0,
-      fontWeight: 500,
-      borderRadius: 0
-    },
-    overrides: {
-      border: 0,
-      borderRadius: 20
-    },
-    input: {
-      color: 'white'
-    }
-  }));
+  // const useStyles = makeStyles(() => ({
+  //   textField: {
+  //     width: '98%',
+  //     height: '50%',
+  //     marginLeft: 'auto',
+  //     marginRight: 'auto',
+  //     paddingBottom: 0,
+  //     marginTop: 0,
+  //     fontWeight: 500,
+  //     borderRadius: 0
+  //   },
+  //   overrides: {
+  //     border: 0,
+  //     borderRadius: 20
+  //   },
+  //   input: {
+  //     color: 'white'
+  //   }
+  // }));
 
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const [address, setAddress] = useState('');
   const [zoom, setZoom] = useState(10);
@@ -58,7 +58,7 @@ export default function Dashboard(state) {
   const handleSubmit = e => {
     e.preventDefault();
     axios
-      .post('http://localhost:3000/api/all', {
+      .post('/api/all', {
         address: address
       })
       .then(res => {
@@ -71,7 +71,7 @@ export default function Dashboard(state) {
   };
 
   useEffect(() => {
-    setData(state.location.data ? state.location.data : data);
+    setData(data);
     setZoom(13);
   }, []);
   // { lat: 34.052235, lng: -118.243683, listings: [] }
@@ -188,7 +188,7 @@ export default function Dashboard(state) {
               id='standard-search'
               variant='outlined'
               label='city, state, zip code'
-              className={classes.textField}
+              // className={classes.textField}
               value={address}
               size='small'
               onChange={e => setAddress(e.target.value)}

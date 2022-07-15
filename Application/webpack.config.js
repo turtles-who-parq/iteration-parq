@@ -37,6 +37,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
+      favicon: './public/favicon.ico'
     }),
     new Dotenv(),
   ],
@@ -51,11 +52,11 @@ module.exports = {
     liveReload: true,
     proxy: {
       '/api': {
-        target: `http://localhost:${process.env.PORT}/api`,
+        target: `http://localhost:${process.env.PORT}`,
         secure: false,
       },
       '/assets': {
-        target: `http://localhost:${process.env.PORT}/assets`,
+        target: `http://localhost:${process.env.PORT}`,
         secure: false,
       },
     },

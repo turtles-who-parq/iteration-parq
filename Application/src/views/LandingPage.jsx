@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import axios from 'axios';
@@ -10,8 +10,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
-import { makeStyles } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
@@ -20,23 +18,23 @@ import AboutPage from '../components/About.jsx';
 import Host from '../components/Host.jsx';
 
 export default function LandingPage() {
-  const useStyles = makeStyles(() => ({
-    textField: {
-      width: '98%',
-      height: '50%',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      paddingBottom: 0,
-      marginTop: 0,
-      fontWeight: 500,
-      borderRadius: 0
-    },
-    input: {
-      color: 'white'
-    }
-  }));
+  // const useStyles = makeStyles(() => ({
+  //   textField: {
+  //     width: '98%',
+  //     height: '50%',
+  //     marginLeft: 'auto',
+  //     marginRight: 'auto',
+  //     paddingBottom: 0,
+  //     marginTop: 0,
+  //     fontWeight: 500,
+  //     borderRadius: 0
+  //   },
+  //   input: {
+  //     color: 'white'
+  //   }
+  // }));
 
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const [address, setAddress] = useState('');
   // const [data, setData] = useState({
@@ -51,14 +49,11 @@ export default function LandingPage() {
     e.preventDefault();
 
     axios
-      .post('http://localhost:3000/api/all', {
+      .post('/api/all', {
         address: address
       })
       .then(res => {
-        navigate({
-          pathname: '/dashboard',
-          data: res.data
-        });
+        navigate('dashboard', { state: { address: res.data } });
       })
       .catch(err => {
         console.log(`Error occured in useEffect: ${err}`);
@@ -71,10 +66,7 @@ export default function LandingPage() {
         <Box sx={{ flexGrow: 1 }}>
           <Toolbar>
             <Button color='inherit' sx={{ flexGrow: 1 }}>
-              <Link
-                component={RouterLink}
-                to='/dashboard'
-                style={{ textDecoration: 'none' }}>
+              <Link component={RouterLink} to='dashboard' style={{ textDecoration: 'none' }}>
                 <Typography
                   variant='h6'
                   component='div'
@@ -138,7 +130,7 @@ export default function LandingPage() {
               id='standard-search'
               variant='outlined'
               label='city, state, zip code'
-              className={classes.textField}
+              // className={classes.textField}
               value={address}
               size='small'
               onChange={e => setAddress(e.target.value)}

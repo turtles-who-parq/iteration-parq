@@ -7,7 +7,7 @@ const cookieController = require('../controllers/cookieController');
 router.post(
   '/signup',
   signupController.signUp,
-  cookieController.setCookie,
+  //cookieController.setCookie,
   (req, res) => {
     res.status(201).send({ message: 'User created successfully' });
   }

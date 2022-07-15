@@ -7,8 +7,8 @@ import '../public/stylesheets/styles.scss';
 const App = () => {
   return (
     <Routes>
-      <Route exact path='/' element={LandingPage} />
-      <Route exact path='dashboard' element={Dashboard} />
+      <Route exact path='/' element={<LandingPage />} />
+      <Route exact path='dashboard' element={<Dashboard />} />
     </Routes>
   );
 };

@@ -6,83 +6,52 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 export const Signup = () => {
-
-  const [createFirstName, setCreateFirstname] = useState('');
-  const [createLastname, setCreateLastname] = useState('');
-  const [createUsername, setCreateUsername] = useState('');
-  const [createPassword, setCreatePassword] = useState('');
+  const [firstname, setFirstname] = useState();
+  const [lastname, setLastname] = useState();
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  
   const [loggedIn, setLoggedIn] = useState(false);
-
   const navigate = useNavigate();
-
-  const handleSignup = e => {
-    const firstName = createFirstName;
-    const lastName = createLastname;
-    const username = createUsername;
-    const password = createPassword;
+  
+  const handleSignup = async e => {
+    // const firstname = createfirstname;
+    // const lastname = createLastname;
+    // const username = createUsername;
+    // const password = createPassword;
     e.preventDefault();
-    console.log('handleSignup post called');
-
-    axios
-      .post('/api/users/signup', {
-        firstName: firstName,
-        lastName: lastName,
-        username: username,
-        password: password
-      })
-      .then(res => {
-        console.log('response from axios:', res);
-        if (res.status === 201) {
-          setLoggedIn(true);
-        }
-      })
-      .catch(err => console.log(err));
-  };
-
-  if (loggedIn) {
-    setTimeout(() => {
+   
+    let response;
+    try {
+      response = await axios.post('/api/users/signup', {
+        firstname,
+        lastname,
+        username,
+        password,
+      });
+      console.log('response ==>', response.data);
+      // if (res.status === 201) {
+      setLoggedIn(true);
       navigate('/dashboard');
-    }, 0);
-  }
-
+      // }
+    } catch (e) {
+      console.log('the error ==>', e);
+    }
+  };
   return (
     <Box
       component='form'
       sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' }
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
       }}
       noValidate
-      autoComplete='off'>
+      autoComplete='off'
+    >
       <div style={{ display: 'grid', gridTemplateColumns: '1fr' }}>
-        <TextField
-          onChange={e => setCreateFirstname(e.target.value)}
-          required
-          id='outlined-required'
-          label='First Name'
-          defaultValue=''
-        />
-        <TextField
-          onChange={e => setCreateLastname(e.target.value)}
-          required
-          id='outlined-required'
-          label='Last Name'
-          defaultValue=''
-        />
-        <TextField
-          onChange={e => setCreateUsername(e.target.value)}
-          required
-          id='outlined-required'
-          label='Username'
-          defaultValue=''
-        />
-        <TextField
-          onChange={e => setCreatePassword(e.target.value)}
-          required
-          id='outlined-password-input'
-          label='Password'
-          type='password'
-          autoComplete='current-password'
-        />
+        <TextField onChange={e => setFirstname(e.target.value)} required id='outlined-required' label='First Name' defaultValue='' />
+        <TextField onChange={e => setLastname(e.target.value)} required id='outlined-required' label='Last Name' defaultValue='' />
+        <TextField onChange={e => setUsername(e.target.value)} required id='outlined-required' label='Username' defaultValue='' />
+        <TextField onChange={e => setPassword(e.target.value)} required id='outlined-password-input' label='Password' type='password' autoComplete='current-password' />
         <Button
           onClick={handleSignup}
           type='submit'
@@ -95,7 +64,7 @@ export const Signup = () => {
             '&:hover': {
               backgroundColor: '#BBD1D1',
               color: '#F8F6F2',
-              boxShadow: 'none'
+              boxShadow: 'none',
             },
             background: '#F8F6F2',
             textTransform: 'none',
@@ -106,8 +75,9 @@ export const Signup = () => {
             paddingTop: '.75rem',
             paddingBottom: '.75rem',
             fontWeight: 'bold',
-            marginBottom: '.5rem'
-          }}>
+            marginBottom: '.5rem',
+          }}
+        >
           {' '}
           create account
         </Button>
@@ -115,3 +85,10 @@ export const Signup = () => {
     </Box>
   );
 };
+
+
+
+
+
+
+

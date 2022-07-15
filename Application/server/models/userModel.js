@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 // Client and Host Model
 const userSchema = new Schema({
-  firstName: {
+  firstname: {
     type: String,
     required: true
   },
-  lastName: {
+  lastname: {
     type: String,
     required: true
   },

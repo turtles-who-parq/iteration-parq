@@ -2,7 +2,6 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -14,7 +13,6 @@ const userRouter = require('./routes/user');
 
 
 // uncomment after placing your favicon in /public
-app.use(favicon(path.resolve(__dirname,'../public/favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -26,6 +24,7 @@ mongoose
   .connect(process.env.mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    dbName: 'parq',
   })
   .then(() => {
     console.log('Connected to Mongo!');
@@ -36,8 +35,8 @@ mongoose
 
 // Don't serve static files or homepage from Dev Server
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'dist')));
-  app.use('/', (req, res) => res.status(200).sendFile(path.resolve(__dirname, '..dist/index.html')));
+  app.use(express.static(path.resolve(__dirname, '../dist')));
+  app.use('/', (req, res) => res.status(200).sendFile(path.resolve(__dirname, '../dist/index.html')));
 }
 
 // routers
