@@ -6,7 +6,7 @@ import Dashboard from './views/Dashboard';
 import LandingPage from './views/LandingPage';
 import '../public/styles/styles.scss';
 import themeParq from '../public/styles/muiTheme';
-
+import AboutPage from './components/AboutPage';
 
 
 const App = () => {
@@ -38,6 +38,7 @@ const App = () => {
       <Routes>
         <Route exact path='/' element={<LandingPage />} />
         <Route exact path='dashboard' element={<Dashboard />} />
+        <Route exact path='about' element={<AboutPage />} />
       </Routes>
     </ThemeProvider>
   );
