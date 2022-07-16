@@ -53,7 +53,7 @@ export default function LandingPage() {
         address: address
       })
       .then(res => {
-        navigate('dashboard', { state: { address: res.data } });
+        navigate('dashboard', { state: res.data });
       })
       .catch(err => {
         console.log(`Error occured in useEffect: ${err}`);
@@ -65,7 +65,11 @@ export default function LandingPage() {
       <div className='navBar' style={{ height: '70px' }} sx={{ flexGrow: 1 }}>
         <Box sx={{ flexGrow: 1 }}>
           <Toolbar>
-            <Button color='inherit' sx={{ flexGrow: 1 }}>
+            <Button>
+              <img className='websiteLogo' src={logo} />
+            </Button>
+            <Box sx={{ width: '80%'}}>
+            <Button color='inherit'>
               <Link component={RouterLink} to='dashboard' style={{ textDecoration: 'none' }}>
                 <Typography
                   variant='h6'
@@ -79,45 +83,10 @@ export default function LandingPage() {
                 </Typography>
               </Link>
             </Button>
-            <Button color='inherit' sx={{ flexGrow: 1 }}>
-              <Typography
-                variant='h6'
-                component='div'
-                sx={{
-                  textTransform: 'none',
-                  fontWeight: 'light',
-                  color: '#36454F'
-                }}>
-                <Host />
-              </Typography>
-            </Button>
-            <Button>
-              <img className='websiteLogo' src={logo} />
-            </Button>
-            <Button color='inherit' sx={{ flexGrow: 1 }}>
-              <Typography
-                variant='h6'
-                component='div'
-                sx={{
-                  textTransform: 'none',
-                  fontWeight: 'light',
-                  color: '#36454F'
-                }}>
-                <AboutPage />
-              </Typography>
-            </Button>
-            <Button color='inherit' sx={{ flexGrow: 1 }}>
-              <Typography
-                variant='h6'
-                component='div'
-                sx={{
-                  textTransform: 'none',
-                  fontWeight: 'light',
-                  color: '#36454F'
-                }}>
-                <LoginPopup />
-              </Typography>
-            </Button>
+            <Host />
+            <AboutPage />
+            <LoginPopup />
+            </Box>
           </Toolbar>
         </Box>
       </div>

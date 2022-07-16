@@ -98,26 +98,7 @@ export default function HostForm() {
           onClick={handleHost}
           type='submit'
           color='primary'
-          variant='contained'
-          // style={btnstyle}
-          sx={{
-            border: '.75px solid #36454F',
-            color: '#BBD1D1',
-            '&:hover': {
-              backgroundColor: '#BBD1D1',
-              color: '#F8F6F2',
-              boxShadow: 'none'
-            },
-            background: '#F8F6F2',
-            textTransform: 'none',
-            boxShadow: 'none',
-            width: '74%',
-            marginBottom: '.5rem',
-            marginLeft: '.2rem',
-            paddingTop: '.75rem',
-            paddingBottom: '.75rem',
-            fontWeight: 'bold'
-          }}>
+          variant='contained'>
           Submit Form
         </Button>
       </div>
