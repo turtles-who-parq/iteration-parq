@@ -18,23 +18,6 @@ import AboutPage from '../components/About.jsx';
 import Host from '../components/Host.jsx';
 
 export default function LandingPage() {
-  // const useStyles = makeStyles(() => ({
-  //   textField: {
-  //     width: '98%',
-  //     height: '50%',
-  //     marginLeft: 'auto',
-  //     marginRight: 'auto',
-  //     paddingBottom: 0,
-  //     marginTop: 0,
-  //     fontWeight: 500,
-  //     borderRadius: 0
-  //   },
-  //   input: {
-  //     color: 'white'
-  //   }
-  // }));
-
-  // const classes = useStyles();
 
   const [address, setAddress] = useState('');
   // const [data, setData] = useState({
@@ -69,23 +52,37 @@ export default function LandingPage() {
               <img className='websiteLogo' src={logo} />
             </Button>
             <Box sx={{ width: '80%'}}>
-            <Button color='inherit'>
-              <Link component={RouterLink} to='dashboard' style={{ textDecoration: 'none' }}>
-                <Typography
-                  variant='h6'
-                  component='div'
-                  sx={{
-                    textTransform: 'none',
-                    fontWeight: 'light',
-                    color: '#36454F'
-                  }}>
+              <Button color='inherit'>
+                <Link component={RouterLink} to='dashboard' style={{ textDecoration: 'none' }}>
+                  <Typography
+                    variant='h6'
+                    component='div'
+                    sx={{
+                      textTransform: 'none',
+                      fontWeight: 'light',
+                      color: '#36454F'
+                    }}>
                   book
-                </Typography>
-              </Link>
-            </Button>
-            <Host />
-            <AboutPage />
-            <LoginPopup />
+                  </Typography>
+                </Link>
+              </Button>
+              <Host />
+              <Button sx={{ flexGrow: 1 }}>
+                <Link component={RouterLink} to='about' style={{ textDecoration: 'none' }}>
+                  <Typography
+                    variant='h6'
+                    component='div'
+                    sx={{
+                      textTransform: 'none',
+                      fontWeight: 'light',
+                      color: '#36454F'
+                    }}>
+                    about
+                  </Typography>
+                </Link>
+              </Button>
+              <AboutPage />
+              <LoginPopup />
             </Box>
           </Toolbar>
         </Box>
