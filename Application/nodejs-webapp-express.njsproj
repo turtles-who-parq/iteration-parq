@@ -36,9 +36,9 @@
     <Content Include="public\fonts\segoeuil.ttf" />
     <Content Include="public\images\successCloudNew.svg" />
     <Content Include="public\images\tweetThis.svg" />
-    <Content Include="public\stylesheets\bootstrap.css" />
-    <Content Include="public\stylesheets\bootstrap.min.css" />
-    <Content Include="public\stylesheets\style.css" />
+    <Content Include="public\styles\bootstrap.css" />
+    <Content Include="public\styles\bootstrap.min.css" />
+    <Content Include="public\styles\style.css" />
     <Content Include="README.md" />
     <Content Include="views\index.pug" />
     <Content Include="views\layout.pug" />
@@ -48,7 +48,7 @@
     <Folder Include="public\" />
     <Folder Include="public\fonts\" />
     <Folder Include="public\images\" />
-    <Folder Include="public\stylesheets\" />
+    <Folder Include="public\styles\" />
     <Folder Include="routes\" />
     <Folder Include="views\" />
   </ItemGroup>
