@@ -16,6 +16,7 @@ import TextField from '@mui/material/TextField';
 import LoginPopup from '../components/LoginPopup.jsx';
 import AboutPage from '../components/About.jsx';
 import Host from '../components/Host.jsx';
+import NavBar from '../components/NavBar';
 
 export default function LandingPage() {
 
@@ -45,7 +46,7 @@ export default function LandingPage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <div className='navBar' style={{ height: '70px' }} sx={{ flexGrow: 1 }}>
+      {/* <div className='navBar' style={{ height: '70px' }} sx={{ flexGrow: 1 }}>
         <Box sx={{ flexGrow: 1 }}>
           <Toolbar>
             <Button>
@@ -86,7 +87,9 @@ export default function LandingPage() {
             </Box>
           </Toolbar>
         </Box>
-      </div>
+      </div> */}
+
+      <NavBar />
 
       <div className='topoSearch' style={{ height: '350px' }}>
         <img className='topo' src={topoBackground} width='100%'></img>

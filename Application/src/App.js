@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import Dashboard from './views/Dashboard';
 import LandingPage from './views/LandingPage';
 import '../public/styles/styles.scss';
@@ -33,6 +34,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Routes>
         <Route exact path='/' element={<LandingPage />} />
         <Route exact path='dashboard' element={<Dashboard />} />

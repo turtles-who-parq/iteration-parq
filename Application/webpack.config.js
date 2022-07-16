@@ -11,6 +11,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   mode: process.env.NODE_ENV,
+  devtool: 'eval-source-map',
   module: {
     rules: [
       {
@@ -23,7 +24,11 @@ module.exports = {
       {
         test: /\.(css|scss)$/,
         exclude: /(node_modules|bower_components)/,
-        use: ['style-loader', 'css-loader'],
+        use: [
+          'style-loader',
+          'css-loader', 
+          'sass-loader'
+        ],
       },
       {
         test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
