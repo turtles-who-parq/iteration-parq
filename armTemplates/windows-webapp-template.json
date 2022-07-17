@@ -29,7 +29,7 @@
                 {
                     "type": "siteextensions",
                     "name": "Microsoft.ApplicationInsights.AzureWebSites",
-                    "apiVersion": "2015-08-01",
+                    "apiVersion": "2016-08-01",
                     "dependsOn": [
                         "[resourceId('Microsoft.Web/Sites', parameters('webAppName'))]"
                     ],
@@ -46,7 +46,7 @@
                         },
                         {
                             "name": "WEBSITE_NODE_DEFAULT_VERSION",
-                            "value": "6.9.1"
+                            "value": "16.16.0"
                         }
                     ],
                     "phpVersion": "7.1"
