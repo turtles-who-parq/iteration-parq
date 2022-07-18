@@ -46,7 +46,7 @@
                         },
                         {
                             "name": "WEBSITE_NODE_DEFAULT_VERSION",
-                            "value": "16.16.0"
+                            "value": "16.13.0"
                         }
                     ],
                     "phpVersion": "7.1"
