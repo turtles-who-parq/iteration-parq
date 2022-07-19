@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
@@ -18,7 +19,7 @@ import AboutPage from '../components/About.jsx';
 import Host from '../components/Host.jsx';
 import ParkingSpotTest from '../components/ParkingSpotTest.jsx';
 
-export default function Dashboard(state) {
+export default function Dashboard() {
   // const useStyles = makeStyles(() => ({
   //   textField: {
   //     width: '98%',
@@ -44,76 +45,79 @@ export default function Dashboard(state) {
   const [address, setAddress] = useState('');
   const [zoom, setZoom] = useState(10);
   const [data, setData] = useState({
-    lat: 34.052235,
-    lng: -118.243683,
-    listings: []
+    lat: 43.65088,
+    lng: -79.36576,
+    listings: [],
   });
+  const [spotElems, setSpotElems] = useState([]);
 
   const props = {
-    data: data,
+    data,
     isVisible: true,
-    zoom: zoom
+    zoom,
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    axios
-      .post('/api/all', {
-        address: address
-      })
-      .then(res => {
-        setData(res.data);
-        setZoom(13);
-      })
-      .catch(err => {
-        console.log(`Error occured in useEffect: ${err}`);
-      });
-  };
+  let output;
 
   useEffect(() => {
     setData(data);
     setZoom(13);
   }, []);
-  // { lat: 34.052235, lng: -118.243683, listings: [] }
 
-  const listings = data.listings;
+  const handleSubmit = async e => {
+    try {
+      e.preventDefault();
+      console.log('hancleSubmit called');
+      output = await axios.post('http://localhost:3000/api/all', {
+        address: address,
+      });
 
-  const spotElems = listings.map((ele, i) => {
-    // convert latitude to longitude of the search to radians
-    const radLatSearch = (Math.PI * data.lat) / 180;
-    const radLngSearch = (Math.PI * data.lng) / 180;
-
-    // convert latitude to longitude of the parking spot to radians
-    const radLatSpot = (Math.PI * ele.coordinates.lat) / 180;
-    const radLngSpot = (Math.PI * ele.coordinates.lng) / 180;
-
-    // calculate the great circle
-    var R = 6371; // km
-    var dLat = radLatSpot - radLatSearch;
-    var dLon = radLngSpot - radLngSearch;
-
-    var a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.sin(dLon / 2) *
-        Math.sin(dLon / 2) *
-        Math.cos(radLatSearch) *
-        Math.cos(radLatSpot);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var d = R * c;
-
-    // console.log(d);
-    // check if the distance is within 5 miles
-    if (d > 8.04672) {
-      props.isVisible = false;
-    } else {
-      props.isVisible = true;
+      setData({ lat: output.data.inputLocation.lat, lng: output.data.inputLocation.lng, listings: output.data.allListings });
+      setZoom(13);
+    } catch (err) {
+      console.log(`Error occured in useEffect: ${err}`);
     }
+  };
 
-    // only return spots with isVisible set to true
-    if (props.isVisible) {
-      return <ParkingSpotTest key={i} info={ele} {...props} />;
+  if (data.listings[0]) {
+    spotFilter();
+  }
+
+  async function spotFilter() {
+    //calcuate distanceS between user-input location and all listings; filtering out listings within range (10000 meters)
+    let listings = [...data.listings];
+    let origin = { ...data };
+    delete origin.listings;
+    try {
+      const requests = listings.map(async (listing, i) => {
+        let distance = await calculateDistance(origin, listing.coordinates);
+
+        return distance < 100000 ? <ParkingSpotTest key={i} info={listing} {...props} /> : undefined;
+      });
+
+      let array = await Promise.all(requests);
+
+      setSpotElems(array.filter(e => e !== undefined)); // Waiting for all the requests to get resolved.
+    } catch (e) {
+      console.log('spotFilter erro==>', e);
     }
-  });
+  }
+
+  async function calculateDistance(origin, destination) {
+    // if (originRef.current.value === '' || destiantionRef.current.value === '') {
+    //   return;
+    // }
+    // eslint-disable-next-line no-undef
+    const directionsService = new google.maps.DirectionsService();
+    const results = await directionsService.route({
+      origin,
+      destination,
+      // eslint-disable-next-line no-undef
+      travelMode: google.maps.TravelMode.DRIVING,
+    });
+
+    return results.routes[0].legs[0].distance.value;
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -127,8 +131,9 @@ export default function Dashboard(state) {
                 sx={{
                   textTransform: 'none',
                   fontWeight: 'light',
-                  color: '#36454F'
-                }}>
+                  color: '#36454F',
+                }}
+              >
                 book
               </Typography>
             </Button>
@@ -139,8 +144,9 @@ export default function Dashboard(state) {
                 sx={{
                   textTransform: 'none',
                   fontWeight: 'light',
-                  color: '#36454F'
-                }}>
+                  color: '#36454F',
+                }}
+              >
                 <Host />
               </Typography>
             </Button>
@@ -156,8 +162,9 @@ export default function Dashboard(state) {
                 sx={{
                   textTransform: 'none',
                   fontWeight: 'light',
-                  color: '#36454F'
-                }}>
+                  color: '#36454F',
+                }}
+              >
                 <AboutPage />
               </Typography>
             </Button>
@@ -168,21 +175,17 @@ export default function Dashboard(state) {
                 sx={{
                   textTransform: 'none',
                   fontWeight: 'light',
-                  color: '#36454F'
-                }}>
+                  color: '#36454F',
+                }}
+              >
                 <LoginPopup />
               </Typography>
             </Button>
           </Toolbar>
         </Box>
       </div>
-      <div
-        className='filterBar'
-        style={{ height: '40px' }}
-        sx={{ flexGrow: 1 }}>
-        <div
-          className='leftFilter'
-          style={{ width: '30%', float: 'left', marginLeft: '10px' }}>
+      <div className='filterBar' style={{ height: '40px' }} sx={{ flexGrow: 1 }}>
+        <div className='leftFilter' style={{ width: '30%', float: 'left', marginLeft: '10px' }}>
           <form onSubmit={handleSubmit}>
             <TextField
               id='standard-search'
@@ -197,8 +200,9 @@ export default function Dashboard(state) {
                   <InputAdornment position='start'>
                     <SearchIcon sx={{ color: '#B9D8D8' }} />
                   </InputAdornment>
-                )
-              }}></TextField>
+                ),
+              }}
+            ></TextField>
           </form>
         </div>
 
@@ -210,8 +214,9 @@ export default function Dashboard(state) {
               sx={{
                 textTransform: 'none',
                 fontWeight: 'light',
-                color: '#36454F'
-              }}>
+                color: '#36454F',
+              }}
+            >
               price
             </Typography>
           </Button>
@@ -222,8 +227,9 @@ export default function Dashboard(state) {
               sx={{
                 textTransform: 'none',
                 fontWeight: 'light',
-                color: '#36454F'
-              }}>
+                color: '#36454F',
+              }}
+            >
               size
             </Typography>
           </Button>
@@ -234,22 +240,19 @@ export default function Dashboard(state) {
               sx={{
                 textTransform: 'none',
                 fontWeight: 'light',
-                color: '#36454F'
-              }}>
+                color: '#36454F',
+              }}
+            >
               type
             </Typography>
           </Button>
         </div>
       </div>
       <div className='mapAndTiles' style={{ height: 'calc( 100vh - 145px )' }}>
-        <div
-          className='leftMap'
-          style={{ width: '49%', height: '100%', float: 'left' }}>
+        <div className='leftMap' style={{ width: '49%', height: '100%', float: 'left' }}>
           <Maps className='map' {...props} />
         </div>
-        <div
-          className='rightTiles'
-          style={{ width: '50%', height: '100%', float: 'right' }}>
+        <div className='rightTiles' style={{ width: '50%', height: '100%', float: 'right' }}>
           {spotElems}
         </div>
       </div>
