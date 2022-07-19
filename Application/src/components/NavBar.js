@@ -41,10 +41,11 @@ const NavBar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Link component={RouterLink} to='/' sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
-            <img className='websiteLogo' src={logo} />
-          </Link>
-
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
+            <Link component={RouterLink} to='/'>
+              <img className='websiteLogo' src={logo} />
+            </Link>
+          </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -75,18 +76,32 @@ const NavBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography variant='h1' textAlign="center">{page}</Typography>
+                <MenuItem 
+                  key={page} 
+                  onClick={handleCloseNavMenu} 
+                >
+                  <Typography 
+                    variant='h1' 
+                    textAlign="center"
+                    component={RouterLink} 
+                    to={`/${page}`}
+                  >
+                    {page}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          {/* <Link component={RouterLink} to='/' sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
-            <img className='websiteLogo' src={logo} />
-          </Link> */}
+          <Box sx={{ flexGrow:1, display: { xs: 'flex', md: 'none' }, mr: 2 }}>
+            <Link component={RouterLink} to='/'>
+              <img className='websiteLogo' src={logo} />
+            </Link>
+          </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <Button
+              <Button 
+                component={RouterLink}
+                to={`/${page}`}
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
@@ -120,7 +135,9 @@ const NavBar = () => {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography component={RouterLink} to={`/${setting}`} textAlign="center">
+                    {setting}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
