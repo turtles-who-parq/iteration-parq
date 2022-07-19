@@ -3,10 +3,12 @@ import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Dashboard from './views/Dashboard';
-import LandingPage from './views/LandingPage';
+import Homepage from './views/Homepage';
 import '../public/styles/styles.scss';
 import themeParq from '../public/styles/muiTheme';
 import AboutPage from './components/AboutPage';
+import LandingPage from './views/LandingPage';
+import Host from './components/Host';
 
 
 const App = () => {
@@ -36,9 +38,12 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Routes>
-        <Route exact path='/' element={<LandingPage />} />
-        <Route exact path='dashboard' element={<Dashboard />} />
-        <Route exact path='about' element={<AboutPage />} />
+        <Route exact path='/' element={<Homepage />} >
+          <Route index element={<LandingPage />} />
+          <Route exact path='Host' element={<Host />} />
+          <Route exact path='Dashboard' element={<Dashboard />} />
+          <Route exact path='About' element={<AboutPage />} />
+        </Route>
       </Routes>
     </ThemeProvider>
   );
