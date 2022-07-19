@@ -67,15 +67,15 @@ export default function Dashboard() {
   const handleSubmit = async e => {
     try {
       e.preventDefault();
-      console.log('hancleSubmit called');
-      output = await axios.post('http://localhost:3000/api/all', {
+      console.log('handleSubmit called');
+      output = await axios.post('/api/all', {
         address: address,
       });
-
+      console.log(output);
       setData({ lat: output.data.inputLocation.lat, lng: output.data.inputLocation.lng, listings: output.data.allListings });
       setZoom(13);
     } catch (err) {
-      console.log(`Error occured in useEffect: ${err}`);
+      console.log(`handleSubmit error==>`, err.response);
     }
   };
 

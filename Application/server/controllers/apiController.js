@@ -8,7 +8,7 @@ apiController.createLocation = async (req, res, next) => {
   try {
     const hostName = res.locals.username;
     const { address, price, options, size } = req.body;
-    const coordinates = res.locals.data;
+    const coordinates = res.locals.inputLocation;
     console.log(coordinates);
     //get coords for api
     await Location.create({
@@ -53,7 +53,7 @@ apiController.getLocation = (req, res, next) => {
 
 //"get all locations" controller
 apiController.getAllLocation = (req, res, next) => {
-  //get all locations
+  console.log('reached getAllLocation');
   Location.find({}, (err, listings) => {
     if (err) {
       return next({
@@ -63,11 +63,9 @@ apiController.getAllLocation = (req, res, next) => {
         },
       });
     }
-    res.locals.result = {
-      lng: res.locals.data.lng,
-      lat: res.locals.data.lat,
-      listings,
-    };
+    console.log('listings==>', listings);
+    res.locals.allListings = listings;
+
     // res.locals.location = docs;
     return next();
   });
@@ -112,7 +110,7 @@ apiController.createBooking = (req, res, next) => {
 apiController.getBooking = async (req, res, next) => {
   // find booking that was stored in database
   const { username } = req.body;
-  await Booking.findOne({ clientUsername: username }).then((result) => {
+  await Booking.findOne({ clientUsername: username }).then(result => {
     if (result) {
       console.log('Booking found in database!');
       res.locals.booking = result;
