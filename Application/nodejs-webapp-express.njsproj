@@ -29,28 +29,26 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="app.js" />
-    <Compile Include="routes\index.js" />
-    <Compile Include="routes\users.js" />
+    <Compile Include="server\server.js" />
+    <Compile Include="server\routes\api.js" />
+    <Compile Include="server\routes\user.js" />
     <Content Include="package.json" />
-    <Content Include="public\fonts\segoeuil.ttf" />
-    <Content Include="public\images\successCloudNew.svg" />
-    <Content Include="public\images\tweetThis.svg" />
-    <Content Include="public\styles\bootstrap.css" />
-    <Content Include="public\styles\bootstrap.min.css" />
-    <Content Include="public\styles\style.css" />
+    <Content Include="public\styles\style.scss" />
     <Content Include="README.md" />
-    <Content Include="views\index.pug" />
-    <Content Include="views\layout.pug" />
-    <Content Include="views\error.pug" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\" />
     <Folder Include="public\fonts\" />
     <Folder Include="public\images\" />
     <Folder Include="public\styles\" />
-    <Folder Include="routes\" />
-    <Folder Include="views\" />
+    <Folder Include="server\routes\" />
+    <Folder Include="server\controllers\" />
+    <Folder Include="server\models\" />
+    <Folder Include="server\" />
+    <Folder Include="src\" />
+    <Folder Include="src\components\" />
+    <Folder Include="src\views\" />
+
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
