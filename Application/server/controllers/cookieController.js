@@ -1,3 +1,4 @@
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 const cookieController = {};
@@ -51,7 +52,8 @@ function generateAuthToken(username) {
   const token = jwt.sign({ username: username }, process.env.JWTPRIVATEKEY, {
     expiresIn: '7d',
   });
+
   return token;
 }
 
-module.exports = cookieController;
+module.exports = cookieController, { generateAuthToken };

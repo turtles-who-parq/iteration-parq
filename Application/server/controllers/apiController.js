@@ -1,7 +1,7 @@
 const { Location, Booking } = require('../models/userModel');
 
 const apiController = {};
-
+ 
 // "Create location" controller - Used for adding a listing
 apiController.createLocation = async (req, res, next) => {
   // When host adds listing, create new location in the db
