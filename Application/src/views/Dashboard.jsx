@@ -18,6 +18,11 @@ import LoginPopup from '../components/LoginPopup.jsx';
 import AboutPage from '../components/About.jsx';
 import Host from '../components/Host.jsx';
 import ParkingSpotTest from '../components/ParkingSpotTest.jsx';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Grid from '@mui/material/Grid';
 
 export default function Dashboard() {
   // const useStyles = makeStyles(() => ({
@@ -50,6 +55,7 @@ export default function Dashboard() {
     listings: [],
   });
   const [spotElems, setSpotElems] = useState([]);
+  const [distance, setDistance] = useState(500);
 
   const props = {
     data,
@@ -63,6 +69,10 @@ export default function Dashboard() {
     setData(data);
     setZoom(13);
   }, []);
+
+  const handleChange = event => {
+    setDistance(event.target.value);
+  };
 
   const handleSubmit = async e => {
     try {
@@ -85,19 +95,23 @@ export default function Dashboard() {
 
   async function spotFilter() {
     //calcuate distanceS between user-input location and all listings; filtering out listings within range (10000 meters)
-    let listings = [...data.listings];
-    let origin = { ...data };
+    const listings = [...data.listings];
+    const origin = { ...data };
     delete origin.listings;
     try {
       const requests = listings.map(async (listing, i) => {
-        let distance = await calculateDistance(origin, listing.coordinates);
+        const range = await calculateDistance(origin, listing.coordinates);
 
-        return distance < 100000 ? <ParkingSpotTest key={i} info={listing} {...props} /> : undefined;
+        return range < distance ? listing : undefined;
       });
 
       let array = await Promise.all(requests);
 
-      setSpotElems(array.filter(e => e !== undefined)); // Waiting for all the requests to get resolved.
+      array = array.filter(e => e !== undefined);
+
+      setData({ ...data, listings: array });
+
+      setSpotElems(array.map((e, i) => <ParkingSpotTest key={i} info={e} {...props} />)); // Waiting for all the requests to get resolved.
     } catch (e) {
       console.log('spotFilter erro==>', e);
     }
@@ -184,29 +198,65 @@ export default function Dashboard() {
           </Toolbar>
         </Box>
       </div>
-      <div className='filterBar' style={{ height: '40px' }} sx={{ flexGrow: 1 }}>
-        <div className='leftFilter' style={{ width: '30%', float: 'left', marginLeft: '10px' }}>
-          <form onSubmit={handleSubmit}>
-            <TextField
-              id='standard-search'
-              variant='outlined'
-              label='city, state, zip code'
-              // className={classes.textField}
-              value={address}
-              size='small'
-              onChange={e => setAddress(e.target.value)}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='start'>
-                    <SearchIcon sx={{ color: '#B9D8D8' }} />
-                  </InputAdornment>
-                ),
-              }}
-            ></TextField>
-          </form>
+      <div className='filterBar' style={{ height: '100px' }} sx={{ flexGrow: 1 }}>
+        <div className='leftFilter' style={{ width: '60%', float: 'left', marginLeft: '10px' }}>
+          <Typography marginLeft={'2px'} color='text.primary'>
+            Please enter your location to see nearby parking spots.
+          </Typography>
+          <Grid container justifyContent='start' alignItems='center' style={{ paddingBottom: '7vh' }}>
+            <Grid item sx={6}>
+              <form>
+                <TextField
+                  style={{ width: '400px' }}
+                  id='standard-search'
+                  variant='outlined'
+                  label='city, state, zip code'
+                  // className={classes.textField}
+                  value={address}
+                  size='small'
+                  onChange={e => setAddress(e.target.value)}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position='start'>
+                        <SearchIcon sx={{ color: '#B9D8D8' }} />
+                      </InputAdornment>
+                    ),
+                  }}
+                ></TextField>
+              </form>
+            </Grid>
+            <Grid item sx={3}>
+              <FormControl sx={{ m: 1, minWidth: 100 }} size='small' paddingTop={'-10px'}>
+                <InputLabel id='demo-simple-select-autowidth-label'>Distance</InputLabel>
+                <Select style={{ height: '44px' }} labelId='demo-simple-select-autowidth-label' id='demo-simple-select-autowidth' value={distance} onChange={handleChange} autowidth label='Age'>
+                  <MenuItem value=''>
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={500}>500 meters</MenuItem>
+                  <MenuItem value={1000}>1000 meters</MenuItem>
+                  <MenuItem value={1500}>1500 meters</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item sx={3}>
+              <Button onClick={handleSubmit} variant='contained' size='medium'>
+                <Typography
+                  // component='div'
+                  sx={{
+                    textTransform: 'none',
+                    fontWeight: '600',
+                    color: 'white',
+                    fontSize: '9',
+                  }}
+                >
+                  search
+                </Typography>
+              </Button>
+            </Grid>
+          </Grid>
         </div>
 
-        <div className='rightFilter' style={{ width: '60%', float: 'right' }}>
+        <div className='rightFilter' style={{ width: '40%', float: 'right' }}>
           <Button className='filterPrice' color='inherit' sx={{ width: 10 }}>
             <Typography
               // variant="h6"

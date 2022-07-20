@@ -11,6 +11,9 @@ router.get('/location', apiController.getLocation, (req, res) => {
   return res.status(200).json(res.locals.location);
 });
 
+router.get('/allListings', apiController.getAllLocation, (req, res) => {
+  return res.status(200).json(res.locals);
+});
 // get request for bookings
 router.get('/booking', cookieController.verifyCookie, apiController.getBooking, (req, res) => {
   return res.status(200).json(res.locals.booking);

@@ -5,22 +5,24 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-export const Signup = () => {
+export const Signup = props => {
+  console.log('props==>', props);
   const [firstname, setFirstname] = useState();
   const [lastname, setLastname] = useState();
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  
+
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
-  
+  const handleClose = props.handleClose;
+
   const handleSignup = async e => {
     // const firstname = createfirstname;
     // const lastname = createLastname;
     // const username = createUsername;
     // const password = createPassword;
     e.preventDefault();
-   
+
     let response;
     try {
       response = await axios.post('/api/users/signup', {
@@ -32,7 +34,7 @@ export const Signup = () => {
       console.log('response ==>', response.data);
       // if (res.status === 201) {
       setLoggedIn(true);
-      navigate('/dashboard');
+      //navigate('/dashboard');
       // }
     } catch (e) {
       console.log('the error ==>', e);
@@ -85,10 +87,3 @@ export const Signup = () => {
     </Box>
   );
 };
-
-
-
-
-
-
-

@@ -25,6 +25,17 @@ export default function Map({ data, zoom }) {
   const [distance, setDistance] = useState('');
   const [duration, setDuration] = useState('');
 
+  // const homeMarker = (
+  //   <Marker
+  //     key={-1}
+  //     position={center}
+  //     color={'yellow'}
+  //     icon={{
+  //       url: 'http://maps.google.com/mapfiles/kml/pal3/icon23.png',
+  //     }}
+  //   />
+  // );
+
   const markerElems = listings.map((listing, i) => {
     const position = {
       lat: listing.coordinates.lat,
@@ -37,6 +48,8 @@ export default function Map({ data, zoom }) {
 
     return <Marker onClick={onMarkerClick} key={i} position={position} />;
   });
+
+  console.log('markerElems==>', markerElems);
 
   // async function calculateRoute() {
   //   // if (originRef.current.value === '' || destiantionRef.current.value === '') {
@@ -70,6 +83,7 @@ export default function Map({ data, zoom }) {
         //   calculateRoute();
         // }}
       >
+        {/* {homeMarker} */}
         {markerElems}
         {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
       </GoogleMap>

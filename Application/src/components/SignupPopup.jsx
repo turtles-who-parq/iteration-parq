@@ -15,11 +15,11 @@ import { Signup } from './Signup.jsx';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
   },
   '& .MuiDialogActions-root': {
-    padding: theme.spacing(1)
-  }
+    padding: theme.spacing(1),
+  },
 }));
 
 const BootstrapDialogTitle = props => {
@@ -36,8 +36,9 @@ const BootstrapDialogTitle = props => {
             position: 'absolute',
             right: 8,
             top: 8,
-            color: theme => theme.palette.grey[500]
-          }}>
+            color: theme => theme.palette.grey[500],
+          }}
+        >
           <CloseIcon />
         </IconButton>
       ) : null}
@@ -47,7 +48,7 @@ const BootstrapDialogTitle = props => {
 
 BootstrapDialogTitle.propTypes = {
   children: PropTypes.node,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
 };
 
 export default function SignupPopup() {
@@ -69,22 +70,20 @@ export default function SignupPopup() {
           sx={{
             textTransform: 'none',
             fontWeight: 'light',
-            color: '#36454F'
-          }}>
+            color: '#36454F',
+          }}
+        >
           sign up
         </Typography>
       </Button>
-      <BootstrapDialog
-        onClose={handleClose}
-        aria-labelledby='customized-dialog-title'
-        open={open}>
-        <BootstrapDialogTitle
-          id='customized-dialog-title'
-          onClose={handleClose}>
+      <BootstrapDialog onClose={handleClose} aria-labelledby='customized-dialog-title' open={open}>
+        <BootstrapDialogTitle id='customized-dialog-title' onClose={handleClose}>
           sign up
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <Signup />
+          <children>
+            <Signup />
+          </children>
         </DialogContent>
       </BootstrapDialog>
     </div>
