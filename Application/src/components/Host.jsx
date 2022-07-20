@@ -1,16 +1,16 @@
 import React from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
 import HostForm from './HostForm';
 import logo from '../../public/images/blueParq.png';
+import Dashboard from '../views/Dashboard';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -58,40 +58,30 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function HostPopup() {
-  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(true);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
   const handleClose = () => {
     setOpen(false);
+    navigate('/Dashboard');
   };
 
   return (
-    <div>
-      <Button onClick={handleClickOpen} color='inherit' sx={{ flexGrow: 1 }}>
-        <Typography
-          variant='h6'
-          component='div'
-          sx={{
-            textTransform: 'none',
-            fontWeight: 'light',
-            color: '#36454F'
-          }}>
-          host
-        </Typography>
-      </Button>
-      <BootstrapDialog
-        onClose={handleClose}
-        aria-labelledby='customized-dialog-title'
-        open={open}>
-        <BootstrapDialogTitle
-          id='customized-dialog-title'
-          onClose={handleClose}></BootstrapDialogTitle>
-        <DialogContent dividers>
-          <HostForm />
-        </DialogContent>
-      </BootstrapDialog>
-    </div>
+    <>
+      <Dashboard />
+      <div>
+        <BootstrapDialog
+          onClose={handleClose}
+          aria-labelledby='customized-dialog-title'
+          open={open}>
+          <BootstrapDialogTitle
+            id='customized-dialog-title'
+            onClose={handleClose}></BootstrapDialogTitle>
+          <DialogContent dividers>
+            <HostForm />
+          </DialogContent>
+        </BootstrapDialog>
+      </div>
+    </>
   );
 }

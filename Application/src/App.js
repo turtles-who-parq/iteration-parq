@@ -8,6 +8,7 @@ import '../public/styles/styles.scss';
 import themeParq from '../public/styles/muiTheme';
 import AboutPage from './components/AboutPage';
 import LandingPage from './views/LandingPage';
+import Host from './components/Host';
 
 
 const App = () => {
@@ -39,8 +40,9 @@ const App = () => {
       <Routes>
         <Route exact path='/' element={<Homepage />} >
           <Route index element={<LandingPage />} />
-          <Route exact path='dashboard' element={<Dashboard />} />
-          <Route exact path='about' element={<AboutPage />} />
+          <Route exact path='Host' element={<Host />} />
+          <Route exact path='Dashboard' element={<Dashboard />} />
+          <Route exact path='About' element={<AboutPage />} />
         </Route>
       </Routes>
     </ThemeProvider>
