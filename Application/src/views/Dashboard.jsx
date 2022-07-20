@@ -117,7 +117,7 @@ export default function Dashboard(state) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <div className='navBar' style={{ height: '70px' }} sx={{ flexGrow: 1 }}>
+      {/* <div className='navBar' style={{ height: '70px' }} sx={{ flexGrow: 1 }}>
         <Box sx={{ flexGrow: 1 }}>
           <Toolbar>
             <Button color='inherit' sx={{ flexGrow: 1 }}>
@@ -175,7 +175,7 @@ export default function Dashboard(state) {
             </Button>
           </Toolbar>
         </Box>
-      </div>
+      </div> */}
       <div
         className='filterBar'
         style={{ height: '40px' }}
