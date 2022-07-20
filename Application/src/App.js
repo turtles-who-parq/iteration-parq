@@ -41,8 +41,12 @@ const App = () => {
         <Route exact path='/' element={<Homepage />} >
           <Route index element={<LandingPage />} />
           <Route exact path='Host' element={<Host />} />
+          <Route exact path='Book' element={<Dashboard />} />          
           <Route exact path='Dashboard' element={<Dashboard />} />
           <Route exact path='About' element={<AboutPage />} />
+          <Route exact path='Profile' element={<Dashboard />} />
+          <Route exact path='Account' element={<Dashboard />} />
+          <Route exact path='Logout' element={<LandingPage />} />
         </Route>
       </Routes>
     </ThemeProvider>
