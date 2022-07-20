@@ -2,6 +2,11 @@ body {
   background-color: #F8F6F2;
 }
 
+.aboutBody{
+  background-image: "./images/topoBackground.png";
+  position: fixed
+}
+
 @font-face {
   font-family: 'AirbnbCereal';
   src: local('Cereal-Bold'), url('../fonts/airbnb-cereal-font/AirbnbCereal_W_Bd.otf') format('otf');
@@ -22,13 +27,18 @@ body {
   /*padding-top: .5rem;
   padding-bottom: .5rem;*/
 } 
-
+ 
 .topoSearch {
   border-bottom: .75px solid #36454F;
   position: relative;
   overflow: hidden;
 } 
 
+.topoAbout {
+  border-bottom: .75px solid #36454F;
+  position: relative;
+  overflow: scroll;
+} 
 
 img.topo {
     position: absolute;
@@ -169,3 +179,5 @@ img.archway {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
 }
+
+
