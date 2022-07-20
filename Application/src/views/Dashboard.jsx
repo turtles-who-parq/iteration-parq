@@ -48,26 +48,31 @@ export default function Dashboard() {
   // const classes = useStyles();
 
   const [address, setAddress] = useState('');
-  const [zoom, setZoom] = useState(10);
+  const [zoom, setZoom] = useState(5);
   const [data, setData] = useState({
     lat: 43.65088,
     lng: -79.36576,
     listings: [],
   });
+  const [homeMarker, setHomemarker] = useState();
   const [spotElems, setSpotElems] = useState([]);
   const [distance, setDistance] = useState(500);
 
   const props = {
     data,
-    isVisible: true,
+    //isVisible: true,
     zoom,
+    homeMarker,
   };
 
   let output;
 
   useEffect(() => {
-    setData(data);
-    setZoom(13);
+    axios.get('/api/allListings').then(response => {
+      console.log('response==>', response);
+      const allListings = response.data.allListings;
+      setData({ ...data, listings: allListings });
+    });
   }, []);
 
   const handleChange = event => {
@@ -78,27 +83,30 @@ export default function Dashboard() {
     try {
       e.preventDefault();
       console.log('handleSubmit called');
-      output = await axios.post('/api/all', {
-        address: address,
+      output = await axios.post('/api/input', {
+        address,
       });
       console.log(output);
-      setData({ lat: output.data.inputLocation.lat, lng: output.data.inputLocation.lng, listings: output.data.allListings });
-      setZoom(13);
+      setData({ ...data, lat: output.data.inputLocation.lat, lng: output.data.inputLocation.lngs });
+      setZoom(15);
+      setHomemarker(true);
+      spotFilter();
     } catch (err) {
       console.log(`handleSubmit error==>`, err.response);
     }
   };
 
-  if (data.listings[0]) {
-    spotFilter();
-  }
-
   async function spotFilter() {
     //calcuate distanceS between user-input location and all listings; filtering out listings within range (10000 meters)
-    const listings = [...data.listings];
-    const origin = { ...data };
-    delete origin.listings;
+
+    // const listings = [...data.listings];
+    // const origin = { ...data };
+    // delete origin.listings;
     try {
+      let result = await axios.get('/api/allListings');
+
+      const listings = result.data.allListings;
+
       const requests = listings.map(async (listing, i) => {
         const range = await calculateDistance(origin, listing.coordinates);
 
@@ -134,70 +142,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <div className='navBar' style={{ height: '70px' }} sx={{ flexGrow: 1 }}>
-        <Box sx={{ flexGrow: 1 }}>
-          <Toolbar>
-            <Button color='inherit' sx={{ flexGrow: 1 }}>
-              <Typography
-                variant='h6'
-                component='div'
-                sx={{
-                  textTransform: 'none',
-                  fontWeight: 'light',
-                  color: '#36454F',
-                }}
-              >
-                book
-              </Typography>
-            </Button>
-            <Button color='inherit' sx={{ flexGrow: 1 }}>
-              <Typography
-                variant='h6'
-                component='div'
-                sx={{
-                  textTransform: 'none',
-                  fontWeight: 'light',
-                  color: '#36454F',
-                }}
-              >
-                <Host />
-              </Typography>
-            </Button>
-            <Link component={RouterLink} to='/'>
-              <Button>
-                <img className='websiteLogo' src={logo} />
-              </Button>
-            </Link>
-            <Button color='inherit' sx={{ flexGrow: 1 }}>
-              <Typography
-                variant='h6'
-                component='div'
-                sx={{
-                  textTransform: 'none',
-                  fontWeight: 'light',
-                  color: '#36454F',
-                }}
-              >
-                <AboutPage />
-              </Typography>
-            </Button>
-            <Button color='inherit' sx={{ flexGrow: 1 }}>
-              <Typography
-                variant='h6'
-                component='div'
-                sx={{
-                  textTransform: 'none',
-                  fontWeight: 'light',
-                  color: '#36454F',
-                }}
-              >
-                <LoginPopup />
-              </Typography>
-            </Button>
-          </Toolbar>
-        </Box>
-      </div>
+    <>
       <div className='filterBar' style={{ height: '100px' }} sx={{ flexGrow: 1 }}>
         <div className='leftFilter' style={{ width: '60%', float: 'left', marginLeft: '10px' }}>
           <Typography marginLeft={'2px'} color='text.primary'>
@@ -306,6 +251,6 @@ export default function Dashboard() {
           {spotElems}
         </div>
       </div>
-    </div>
+    </>
   );
 }

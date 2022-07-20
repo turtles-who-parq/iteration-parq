@@ -21,7 +21,7 @@ router.get('/booking', cookieController.verifyCookie, apiController.getBooking, 
 
 // get request for all locations
 
-router.post('/all', googleRequestController.mapLocation, apiController.getAllLocation, (req, res) => {
+router.post('/input', googleRequestController.mapLocation, (req, res) => {
   return res.status(200).json(res.locals);
 });
 

@@ -13,7 +13,8 @@ const options = {
   styles: mapStyles,
 };
 
-export default function Map({ data, zoom }) {
+export default function Map({ data, zoom, homeMarker }) {
+  console.log('data==>', data);
   const center = {
     lat: data.lat,
     lng: data.lng,
@@ -42,11 +43,11 @@ export default function Map({ data, zoom }) {
       lng: listing.coordinates.lng,
     };
 
-    const onMarkerClick = e => {
-      console.log(listing.address);
-    };
+    // const onMarkerClick = e => {
+    //   console.log(listing.address);
+    // };
 
-    return <Marker onClick={onMarkerClick} key={i} position={position} />;
+    return <Marker key={i} position={position} visible={true} />;
   });
 
   console.log('markerElems==>', markerElems);
@@ -83,7 +84,14 @@ export default function Map({ data, zoom }) {
         //   calculateRoute();
         // }}
       >
-        {/* {homeMarker} */}
+        {homeMarker && (
+          <Marker
+            position={{ lat: data.lat, lng: data.lng }}
+            icon={{
+              url: 'http://maps.google.com/mapfiles/kml/pal3/icon23.png',
+            }}
+          />
+        )}
         {markerElems}
         {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
       </GoogleMap>
