@@ -46,28 +46,33 @@ export default function Dashboard(state) {
   const [data, setData] = useState({
     lat: 34.052235,
     lng: -118.243683,
-    listings: []
+    listings: [],
   });
 
   const props = {
     data: data,
     isVisible: true,
-    zoom: zoom
+    zoom: zoom,
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .post('/api/all', {
-        address: address
+        address: address,
       })
-      .then(res => {
+      .then((res) => {
         setData(res.data);
         setZoom(13);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(`Error occured in useEffect: ${err}`);
       });
+  };
+
+  const onClick = (e) => {
+    e.preventDefault();
+    console.log('Checking Out ----------------------> ');
   };
 
   useEffect(() => {
@@ -179,10 +184,12 @@ export default function Dashboard(state) {
       <div
         className='filterBar'
         style={{ height: '40px' }}
-        sx={{ flexGrow: 1 }}>
+        sx={{ flexGrow: 1 }}
+      >
         <div
           className='leftFilter'
-          style={{ width: '30%', float: 'left', marginLeft: '10px' }}>
+          style={{ width: '30%', float: 'left', marginLeft: '10px' }}
+        >
           <form onSubmit={handleSubmit}>
             <TextField
               id='standard-search'
@@ -191,14 +198,15 @@ export default function Dashboard(state) {
               // className={classes.textField}
               value={address}
               size='small'
-              onChange={e => setAddress(e.target.value)}
+              onChange={(e) => setAddress(e.target.value)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position='start'>
                     <SearchIcon sx={{ color: '#B9D8D8' }} />
                   </InputAdornment>
-                )
-              }}></TextField>
+                ),
+              }}
+            ></TextField>
           </form>
         </div>
 
@@ -210,8 +218,9 @@ export default function Dashboard(state) {
               sx={{
                 textTransform: 'none',
                 fontWeight: 'light',
-                color: '#36454F'
-              }}>
+                color: '#36454F',
+              }}
+            >
               price
             </Typography>
           </Button>
@@ -222,8 +231,9 @@ export default function Dashboard(state) {
               sx={{
                 textTransform: 'none',
                 fontWeight: 'light',
-                color: '#36454F'
-              }}>
+                color: '#36454F',
+              }}
+            >
               size
             </Typography>
           </Button>
@@ -234,8 +244,9 @@ export default function Dashboard(state) {
               sx={{
                 textTransform: 'none',
                 fontWeight: 'light',
-                color: '#36454F'
-              }}>
+                color: '#36454F',
+              }}
+            >
               type
             </Typography>
           </Button>
@@ -244,14 +255,21 @@ export default function Dashboard(state) {
       <div className='mapAndTiles' style={{ height: 'calc( 100vh - 145px )' }}>
         <div
           className='leftMap'
-          style={{ width: '49%', height: '100%', float: 'left' }}>
+          style={{ width: '49%', height: '100%', float: 'left' }}
+        >
           <Maps className='map' {...props} />
         </div>
         <div
           className='rightTiles'
-          style={{ width: '50%', height: '100%', float: 'right' }}>
+          style={{ width: '50%', height: '100%', float: 'right' }}
+        >
           {spotElems}
         </div>
+      </div>
+      <div className='button'>
+        <Button variant='contained' onClick={onClick}>
+          Checkout
+        </Button>
       </div>
     </div>
   );
